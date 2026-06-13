@@ -27,6 +27,11 @@ server {
 	# listen 443 ssl default_server;
 	# listen [::]:443 ssl default_server;
 	#
+
+	ssl_certificate /etc/nginx/ssl/cert.crt;
+	ssl_certificate_key /etc/nginx/ssl/key.key; 
+    ssl_protocols TLSv1.2 TLSv1.3;
+
 	# Note: You should disable gzip for SSL traffic.
 	# See: https://bugs.debian.org/773332
 	#

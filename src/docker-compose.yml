@@ -1,11 +1,10 @@
-version: '3'
-
 services:
   nginx:
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
-    image: nginx_image
-    container_name: nginx_container 
+    image: nginx_image6
+    container_name: nginx_container6
     ports: 
-      - "443:433"
+      - "443:443"
+
