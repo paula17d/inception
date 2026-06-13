@@ -1,0 +1,64 @@
+docker commands
+
+*commands*
+docker pull
+docker run
+docker ps // listed die containers am runnen sind
+docker ps -a // lists all containers created
+docker logs
+docker exec
+docker stop // stops container 
+docker rm // delete container
+docker rmi // delete image 
+docker images // listed die schon gebildetet images auf 
+docker system prune
+
+
+*commands & options*
+docker pull nginx
+docker images
+docker run -d -p 8080:80 nginx
+docker ps
+docker logs <container_id>
+docker exec -it <container_id> bash
+docker stop <container_id>
+docker rm <container_id>
+docker rmi nginx
+docker system prune
+
+
+
+# build whatever (image) is in Dockerfile (. = address of dockerfile)
+docker build -t imagename .
+
+
+# run the built image in a container
+docker run -it imagename
+-it = (i = standard input/keyboard) (t = tty terminal/graphical interface)
+
+
+# run container w port 80
+docker run -d -p 8080:80 containername
+# then go on on google
+localhost:8080
+
+# differnce btw entrypoint and cmd 
+cmd can be overwritten through stdin w different cmds
+entrypoint stays no matter what 
+
+# gets file from container to pc (nginx.conf file) (not done in eval)
+docker cp <container_name>:/path/to/file ./local_file
+
+# now works with port 443
+docker run -d -p 8443:443 imagename
+# in google search
+localhost:8443
+
+# SSL certificates are needed for security (see in localhost next to it) which is needed for only https://localhost:8443.
+this is where 8443 is going through
+
+# TODO: definition of http, https, ssl certificates
+
+# find own ip address
+cmd ip addr
+
