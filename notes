@@ -62,3 +62,15 @@ this is where 8443 is going through
 # find own ip address
 cmd ip addr
 
+# DELETE ALL CONTAINERS CMD
+sudo docker rm -f $(sudo docker ps -aq)
+# DELETE ALL IMAGES CMD
+sudo docker rmi -f $(sudo docker images -q)
+# DELETE ALL IMAGES AND CONTAINERS CMD
+sudo docker compose down --volumes --rmi all
+
+# make delete to put in makefile
+sudo docker compose down --volumes --rmi all
+sudo docker rm -f $(sudo docker ps -aq)
+sudo docker rmi -f $(sudo docker images -q)
+
