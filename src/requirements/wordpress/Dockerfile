@@ -1,8 +1,8 @@
 FROM debian:bookworm
 
-# install wordpress 
+# install wordpress (php-mysql is database)
 RUN apt-get update && \
-    apt-get install -y wget tar php-fpm && \
+    apt-get install -y wget tar php-fpm php-mysql && \
     apt-get clean
 
     
@@ -12,11 +12,7 @@ COPY ./config/www.conf /etc/php/8.2/fpm/pool.d/www.conf
     
 RUN mkdir -p /run/php
 
-WORKDIR /var/www/html
+COPY ./script/setup_wordpress_php.sh /
+RUN chmod +x /setup_wordpress_php.sh
 
-RUN wget https://wordpress.org/latest.tar.gz && \
-    tar -xzf latest.tar.gz && \
-    rm latest.tar.gz
-
-# currently running in background
-CMD ["php-fpm8.2", "-F"]
+CMD ["/setup_wordpress_php.sh"]
