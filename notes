@@ -38,7 +38,7 @@ docker run -it imagename
 
 
 # run container w port 80
-docker run -d -p 8080:80 containername
+docker run -it -p 8080:80 imagename
 # then go on on google
 localhost:8080
 
@@ -74,3 +74,9 @@ sudo docker compose down --volumes --rmi all
 sudo docker rm -f $(sudo docker ps -aq)
 sudo docker rmi -f $(sudo docker images -q)
 
+# TODO
+- change protocols to one instead of two (sibject req)
+    in nginx/config/default
+
+# make clean wordpress_volume
+rm -r -f rm -rf 

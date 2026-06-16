@@ -3,19 +3,26 @@ services:
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
-    image: nginx_image
-    container_name: nginx_container
+    image: nginx_image99999
+    container_name: nginx_container99999
     ports: 
       - "443:443"
+    volumes:
+      - wp-volume:/var/www/html
+    networks:
+      inception:
+    restart: unless-stopped
 
   wordpress:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
-    image: wordpress_image1
-    container_name: wordpress_container1
+    image: wordpress_image99999
+    container_name: wordpress
     volumes:
-      - wp-volume:/var/www/wordpress
+      - wp-volume:/var/www/html
+    networks:
+      inception:
     restart: unless-stopped
 
 volumes:
@@ -23,4 +30,9 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /home/paula/inception/wordpress_volume
+      device: /home/paula/inception_final/wordpress_volume10
+
+networks:
+  inception:
+    driver: bridge
+

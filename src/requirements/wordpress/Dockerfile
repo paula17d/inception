@@ -2,12 +2,17 @@ FROM debian:bookworm
 
 # install wordpress 
 RUN apt-get update && \
-    apt-get install -y wordpress curl wget tar php-fpm && \
+    apt-get install -y wget tar php-fpm && \
     apt-get clean
 
+    
+EXPOSE 9000
+
+COPY ./config/www.conf /etc/php/8.2/fpm/pool.d/www.conf
+    
 RUN mkdir -p /run/php
 
-WORKDIR /var/www
+WORKDIR /var/www/html
 
 RUN wget https://wordpress.org/latest.tar.gz && \
     tar -xzf latest.tar.gz && \

@@ -6,10 +6,11 @@ RUN apt-get update && \
     apt-get clean
     # rm -rf /var/lib/apt/lists/*
 
+EXPOSE 443
+
 # send the adjusted default (left) to the og default (right) to overwrite
 COPY ./config/default /etc/nginx/sites-enabled/default
 
-EXPOSE 443
 
 # creates a folder where the ssl keys/certificates are (needed for https)
 RUN mkdir -p /etc/nginx/ssl

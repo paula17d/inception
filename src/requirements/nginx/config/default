@@ -19,15 +19,16 @@
 # Default server configuration
 #
 server {
-	listen 443 default_server;
-	listen [::]:443 default_server;
+	# server listening on port 443, https so we need ssl
+	listen 443 ssl default_server;
+	listen [::]:443 ssl default_server;
 
-	# SSL configuration
-	#
-	# listen 443 ssl default_server;
-	# listen [::]:443 ssl default_server;
-	#
+	# where our wordpress would be 
+	root /var/www/html;
+	# the name of our wordpress main page
+	index index.php index.html index.htm;
 
+	# the address of where the key and certificate will be put  
 	ssl_certificate /etc/nginx/ssl/cert.crt;
 	ssl_certificate_key /etc/nginx/ssl/key.key; 
     ssl_protocols TLSv1.2 TLSv1.3;
@@ -43,10 +44,8 @@ server {
 	#
 	# include snippets/snakeoil.conf;
 
-	root /var/www/html;
-
 	# Add index.php to the list if you are using PHP
-	index index.html index.htm index.nginx-debian.html;
+	# index index.html index.htm index.nginx-debian.html;
 
 	server_name _;
 
@@ -58,14 +57,15 @@ server {
 
 	# pass PHP scripts to FastCGI server
 	#
-	#location ~ \.php$ {
-	#	include snippets/fastcgi-php.conf;
-	#
+	location ~ \.php$ {
+		include snippets/fastcgi-php.conf;
+	
 	#	# With php-fpm (or other unix sockets):
-	#	fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+	#	# fastcgi_pass unix:/run/php/php7.4-fpm.sock;
 	#	# With php-cgi (or other tcp sockets):
-	#	fastcgi_pass 127.0.0.1:9000;
-	#}
+		fastcgi_pass wordpress:9000;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+	}
 
 	# deny access to .htaccess files, if Apache's document root
 	# concurs with nginx's one
