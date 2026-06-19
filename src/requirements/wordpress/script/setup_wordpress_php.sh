@@ -11,4 +11,11 @@ then
     rm latest.tar.gz
 fi
 
+# check if database is here
+# echo "waiting for the database to be created"
+# while ! mariadb 
+#do
+#    :
+# done
+
 exec php-fpm8.2 -F

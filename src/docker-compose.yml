@@ -5,6 +5,8 @@ services:
       dockerfile: Dockerfile
     image: nginx_image99999
     container_name: nginx_container99999
+    depends_on:
+      - mariadb
     ports: 
       - "443:443"
     volumes:
@@ -19,8 +21,20 @@ services:
       dockerfile: Dockerfile
     image: wordpress_image99999
     container_name: wordpress
+    depends_on:
+      - mariadb
     volumes:
       - wp-volume:/var/www/html
+    networks:
+      inception:
+    restart: unless-stopped
+
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    image: mariadb_image
+    container_name: mariadb
     networks:
       inception:
     restart: unless-stopped
