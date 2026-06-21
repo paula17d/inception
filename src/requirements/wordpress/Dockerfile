@@ -2,7 +2,7 @@ FROM debian:bookworm
 
 # install wordpress (php-mysql is database)
 RUN apt-get update && \
-    apt-get install -y wget tar php-fpm php-mysql && \
+    apt-get install -y wget tar php-fpm php-mysql mariadb-client && \
     apt-get clean
 
     

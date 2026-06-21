@@ -70,9 +70,9 @@ sudo docker rmi -f $(sudo docker images -q)
 sudo docker compose down --volumes --rmi all
 
 # make delete to put in makefile
-sudo docker compose down --volumes --rmi all
-sudo docker rm -f $(sudo docker ps -aq)
-sudo docker rmi -f $(sudo docker images -q)
+docker compose down --volumes --rmi all
+docker rm -f $(docker ps -aq)
+docker rmi -f $(docker images -q)
 
 # TODO
 - change protocols to one instead of two (sibject req)
@@ -80,3 +80,7 @@ sudo docker rmi -f $(sudo docker images -q)
 
 # make clean wordpress_volume
 rm -r -f rm -rf 
+
+# check users that have access to database from mariadb container
+SELECT User, Host FROM mysql.user;
+SHOW GRANTS FOR 'wpuser'@'%';

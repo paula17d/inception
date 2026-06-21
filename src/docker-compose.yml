@@ -35,6 +35,8 @@ services:
       dockerfile: Dockerfile
     image: mariadb_image
     container_name: mariadb
+    volumes:
+      - db-volume:/var/lib/mysql
     networks:
       inception:
     restart: unless-stopped
@@ -44,7 +46,12 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /home/paula/inception_final/wordpress_volume10
+      device: /home/paula/inception_final/wordpress_volume1
+  db-volume:
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/paula/inception_final/mariadb_volume1
 
 networks:
   inception:

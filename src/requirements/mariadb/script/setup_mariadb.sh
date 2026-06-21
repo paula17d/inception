@@ -1,43 +1,36 @@
 #!/bin/bash
 
-# start mariadb temporarily
-service mariadb start
+set -e
 
-# wait until mariadb is completely ready and started
-sleep 5
+mkdir -p /run/mysqld
 
-# create database
-mysql -e "CREATE DATABASE IF NOT EXISTS wordpress;"
+chown -R mysql:mysql /run/mysqld
+chown -R mysql:mysql /var/lib/mysql
 
-# create user
-mysql -e "CREATE USER IF NOT EXISTS 'wpuser'@'%' IDENTIFIED BY 'secret';"
+if [ ! -d "/var/lib/mysql/mysql/wordpress" ]; then
+    echo "Initializing MariaDB..."
 
-# give permissions
-mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'%';"
+    mysql_install_db --user=mysql --datadir=/var/lib/mysql
 
-# take over changes
-mysql -e "FLUSH PRIVILEGES;"
+    mysqld_safe --user=mysql &
 
-# execute mariadb in foreground, so container will stay active
-tail -f /dev/null
+    until mariadb -e "SELECT 1;" >/dev/null 2>&1
+    do
+        sleep 1
+    done
 
+    echo "Creating database and user..."
 
-# check if maria db's database is empty
-#if [ ! -d "/var/lib/mysql/mysql" ];
+    mariadb <<EOF
+CREATE DATABASE IF NOT EXISTS wordpress;
+CREATE USER IF NOT EXISTS 'wpuser'@'%' IDENTIFIED BY 'secret';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'%';
+FLUSH PRIVILEGES;
+EOF
 
-#then
-#    mariadb-install-db --user=mysql --datadir=/var/lib/mysql
+    mysqladmin shutdown
+fi
 
-#fi
+echo "Starting MariaDB..."
 
-
-
-# When the MariaDB container starts, it should:
-# 1. initialize the database directory if needed
-# 2. start MariaDB temporarily
-# 3. create the WordPress database
-# 4. create a WordPress database user
-# 5. give that user permissions
-# 6. shut down the temporary server
-# 7. restart MariaDB in the foreground so the container stays alive
-# 8. call in dockerfile
+exec mariadbd --user=mysql
