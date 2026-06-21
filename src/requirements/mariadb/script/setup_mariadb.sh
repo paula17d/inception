@@ -22,9 +22,9 @@ if [ ! -d "/var/lib/mysql/mysql/wordpress" ]; then
     echo "Creating database and user..."
 
     mariadb <<EOF
-CREATE DATABASE IF NOT EXISTS wordpress;
-CREATE USER IF NOT EXISTS 'wpuser'@'%' IDENTIFIED BY 'secret';
-GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'%';
+CREATE DATABASE IF NOT EXISTS $DB_NAME;
+CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';
+GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%';
 FLUSH PRIVILEGES;
 EOF
 
@@ -33,4 +33,5 @@ fi
 
 echo "Starting MariaDB..."
 
+# runs in foreground
 exec mariadbd --user=mysql
