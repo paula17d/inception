@@ -84,3 +84,6 @@ rm -r -f rm -rf
 # check users that have access to database from mariadb container
 SELECT User, Host FROM mysql.user;
 SHOW GRANTS FOR 'wpuser'@'%';
+
+yourwebsite.com/wp-admin or yourwebsite.com/wp-login.php
+https://localhost:443/wp-admin
