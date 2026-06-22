@@ -85,5 +85,7 @@ rm -r -f rm -rf
 SELECT User, Host FROM mysql.user;
 SHOW GRANTS FOR 'wpuser'@'%';
 
+# login links for admin and user 
 yourwebsite.com/wp-admin or yourwebsite.com/wp-login.php
 https://localhost:443/wp-admin
+https://localhost:443/wp-login.php

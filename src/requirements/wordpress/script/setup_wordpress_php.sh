@@ -42,4 +42,23 @@ echo "Connected to the database."
 # send core files
 ./wp-cli.phar core install --url=${WP_URL} --title=${WP_TITLE} --admin_user=${WP_ADMIN_USER} --admin_password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL} --allow-root
 
+# create second user (check whether it already exists or not)
+if ./wp-cli.phar user list --field=user_login --allow-root | grep -q "^${WP_SECOND_USER}$";
+then
+    echo "Second user already exists."
+else
+    echo "Creating second user..."
+
+    if ./wp-cli.phar user create "$WP_SECOND_USER" "$WP_SECOND_USER_EMAIL" \
+        --user_pass="$WP_SECOND_USER_PASSWORD" \
+        --role="$WP_SECOND_USER_ROLE" \
+        --allow-root; 
+    then
+        echo "Second user created successfully."
+    else
+        echo "Failed to create a second user."
+        exit 1
+    fi
+fi
+
 exec php-fpm8.2 -F
