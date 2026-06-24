@@ -6,12 +6,14 @@ create-volumes:
 up:
 	docker compose -f ./src/docker-compose.yml up
 
-delete: 
-	docker compose -f ./src/docker-compose.yml down --volumes --rmi all
-
-delete-volumes-localhost:
+# for folders
+clean: 
 	sudo rm -r -f rm -rf /home/paula/data
 
-clean: delete delete-volumes-localhost
+# for containers
+fclean: clean
+	docker compose -f ./src/docker-compose.yml down --volumes --rmi all
 
-.PHONY: all create-volumes up delete delete-volumes-localhost clean
+re: fclean all
+
+.PHONY: all create-volumes up clean fclean
