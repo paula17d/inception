@@ -48,12 +48,12 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /home/paula/inception_final/wordpress_volume
+      device: /home/paula/data/wordpress_volume
   db-volume:
     driver_opts:
       o: bind
       type: none
-      device: /home/paula/inception_final/mariadb_volume
+      device: /home/paula/data/mariadb_volume
 
 networks:
   inception:

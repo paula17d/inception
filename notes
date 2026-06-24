@@ -79,7 +79,7 @@ docker rmi -f $(docker images -q)
     in nginx/config/default
 
 # make clean wordpress_volume
-rm -r -f rm -rf 
+rm -r -f rm -rf <order name>
 
 # check users that have access to database from mariadb container
 SELECT User, Host FROM mysql.user;
