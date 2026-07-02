@@ -1,5 +1,4 @@
 FROM debian:bookworm 
-# is bookworm correct second-to-last version
 
 RUN apt-get update && \
     apt-get install -y nginx openssl && \
@@ -11,7 +10,6 @@ EXPOSE 443
 # send the adjusted default (left) to the og default (right) to overwrite
 COPY ./config/default /etc/nginx/sites-enabled/default
 
-
 # creates a folder where the ssl keys/certificates are (needed for https)
 RUN mkdir -p /etc/nginx/ssl
 
@@ -22,6 +20,6 @@ RUN openssl req -x509 -newkey rsa:4096 \
     -sha256 -days 3650 -nodes \
     -subj "/C=DE/ST=Baden-Wurttemberg/L=Heilbronn/O=42Heilbronn/OU=Paula Drettas ROOT CA/CN=Paula Drettas"
 
-# start nginx in foreground
+# start nginx in foreground (daemen off)
 ENTRYPOINT ["nginx"] 
 CMD ["-g", "daemon off;"] 

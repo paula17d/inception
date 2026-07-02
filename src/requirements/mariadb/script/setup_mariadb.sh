@@ -7,6 +7,7 @@ mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
 chown -R mysql:mysql /var/lib/mysql
 
+# wordpress (l18) needs to wait for mariadb to be fully initialized or else fail connecting to early
 if [ ! -d "/var/lib/mysql/mysql/wordpress" ]; then
     echo "Initializing MariaDB..."
 

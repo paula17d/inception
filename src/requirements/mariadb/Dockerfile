@@ -8,7 +8,7 @@ RUN apt-get update && \
 EXPOSE 3306
 
 # copy file/folder into docker image
-# TODO: replace old server config w new one to override MariaDB settings
+# replace old server config w new one to override MariaDB settings
 COPY ./config/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 COPY ./script/setup_mariadb.sh /

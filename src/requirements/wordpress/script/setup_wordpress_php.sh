@@ -17,6 +17,7 @@ then
 
     rm latest.tar.gz
     echo "wordpress downloaded."
+fi
 
     # download wp-cli
     curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
@@ -26,7 +27,6 @@ then
     chmod +x wp-cli.phar
     # download core files
     ./wp-cli.phar core download --allow-root
-fi
 
 # start mariadb to execute the cmd that gives wordpress access to the mariadb database 
 while ! mariadb -h${DB_HOST} -u${DB_USER} -p${DB_PASSWORD} -e "SELECT 1;" >/dev/null 2>&1

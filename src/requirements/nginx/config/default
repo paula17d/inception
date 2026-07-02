@@ -6,7 +6,7 @@ server {
 	listen [::]:443 ssl default_server;
 
 	# change localhost URL to personalized URL
-	server_name paula.42.fr;
+	server_name pdrettas.42.fr;
 
 	# where our wordpress would be 
 	root /var/www/html;
